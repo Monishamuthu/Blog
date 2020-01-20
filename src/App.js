@@ -1,13 +1,29 @@
 import React from "react";
 import "./styles.css";
-import Login from "./login/components/Login";
+
+import {HashRouter,Switch,Route} from 'react-router-dom';
+import Routes from './router';
 
 export default function App() {
   return (
-    <div className="App">
-      <Login />
-      {/* <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2> */}
+    
+    <div>
+    <HashRouter>
+      <div>
+        <Switch>
+          {
+            Routes.map((item,index)=>{
+              return(<Route 
+                      path={item.path} 
+                      component={item.component}
+                      exact={item.exact || false}>
+                     </Route>)
+                      
+            })
+          }
+        </Switch>
+      </div>
+    </HashRouter>
     </div>
   );
 }

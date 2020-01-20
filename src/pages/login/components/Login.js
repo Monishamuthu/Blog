@@ -1,16 +1,26 @@
 import React, { Component } from "react";
 
-import Buttons from "../../components/Buttons";
+import Buttons from "../../../components/Buttons";
 // import Background from '../../imgs/logoImg.png';
 import "../css/login.css";
-import Selectbox from "../../components/Selectbox";
-import Textbox from "../../components/TextBox";
+import Selectbox from "../../../components/Selectbox";
+import Textbox from "../../../components/TextBox";
+import Modal from "../../../components/Modal";
 
-var menuitems = [".Netghhh", "Java", "C++", "C", "React JS"];
+var menuitems = ["Java", "AngularJS", "ReactJS"];
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = { usnm: "", emid: "", mbno: "", curs: "" };
+    this.state = {
+      usnm: "",
+      emid: "",
+      mbno: "",
+      curs: "",
+      email_error_text: "",
+      errorstatus: false,
+      showDialog: false,
+      dialogMsg: ""
+    };
     console.log({ props });
   }
   setValues(e, fieldType) {
@@ -33,12 +43,15 @@ class Login extends Component {
     }
   }
 
-  gotoRegister = () => {
+  movetoregister() {
     this.props.history.push("/register");
-  };
+  }
 
   CheckUser() {
-    if (this.state.usnm != "" || this.state.emid != "") {
+    if (
+      (this.state.usnm != "" || this.state.emid != "") &&
+      this.state.curs != ""
+    ) {
       if (this.checkReactUser()) {
         alert("react");
         this.props.history.push("/blog");
@@ -52,7 +65,7 @@ class Login extends Component {
         alert("Please register before login");
       }
     } else {
-      alert("Please enter registered username or email");
+      alert("Please enter registered username or email and course");
     }
   }
 
@@ -161,6 +174,17 @@ class Login extends Component {
       return check;
     }
   }
+  openDialog = msg => {
+    this.setState({
+      showDialog: true,
+      dialogMsg: msg
+    });
+  };
+  closeDialog = () => {
+    this.setState({
+      showDialog: false
+    });
+  };
   render() {
     return (
       <div style={{ marginTop: "70px" }}>
@@ -178,7 +202,8 @@ class Login extends Component {
             <img
               alt="logoimg"
               style={{ width: "200px", height: "120px" }}
-              src="./logoImg.jpg"
+              src="./logoImg1.jpg
+              "
             />
           </div>
 
@@ -206,6 +231,15 @@ class Login extends Component {
               this.setValues(e, "mbno");
             }}
           />
+          <Selectbox
+            labelId="courseCombo"
+            labelName="Select Course"
+            value={this.state.curs}
+            onChange={e => {
+              this.setValues(e, "curs");
+            }}
+            menuitems={menuitems}
+          />
           {/*  <Selectbox labelId="courseCombo" labelName = "Select Course" value={this.state.curs}   onChange={(e) => {this.setValues(e,"curs")}} menuitems = {menuitems}/> */}
           <div
             style={{
@@ -227,16 +261,20 @@ class Login extends Component {
               />
             </div>
             <div style={{ marginLeft: "10px" }}>
-              <Buttons
-                onClick={() => {
-                  this.gotoRegister();
-                }}
-                btnName="Register"
-              />
+              <Buttons onClick={this.movetoregister()} btnName="Register" />
             </div>
           </div>
         </div>
         {/* </div>  */}
+
+        <Modal open={this.state.showDialog}>
+          {/* this.state.ourRooms */}
+          <div style={{ width: "100%" }}>
+            {this.state.dialogMsg}
+
+            <Buttons onClick={this.closeDialog}>Close</Buttons>
+          </div>
+        </Modal>
       </div>
     );
   }
