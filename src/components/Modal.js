@@ -43,7 +43,9 @@ class Modal extends Component {
             borderBottomLeftRadius: 5,
             borderBottomRightRadius: 5,
             alignItems: "center",
-            justifyContent: "center"
+            justifyContent: "center",
+            position:'relative'
+
           }}
         >
           {this.props.children}

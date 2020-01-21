@@ -44,6 +44,8 @@ class Textbox extends Component {
           type="text"
           value={this.props.value}
           onChange={this.props.onChange}
+          helperText={this.props.errorText === "" ? "" : this.props.errorText}
+          error={this.props.error}
           margin="normal"
           variant="outlined"
           InputLabelProps={{
