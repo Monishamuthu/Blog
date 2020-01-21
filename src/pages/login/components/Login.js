@@ -43,9 +43,9 @@ class Login extends Component {
     }
   }
 
-  movetoregister() {
+  movetoregister = () => {
     this.props.history.push("/register");
-  }
+  };
 
   CheckUser() {
     if (
@@ -261,7 +261,7 @@ class Login extends Component {
               />
             </div>
             <div style={{ marginLeft: "10px" }}>
-              <Buttons onClick={this.movetoregister()} btnName="Register" />
+              <Buttons onClick={this.movetoregister} btnName="Register" />
             </div>
           </div>
         </div>
