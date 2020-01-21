@@ -31,7 +31,7 @@ class Blog extends Component {
 
     let data = {
       name: LoggedINuserArray.name,
-      date: new Date(),
+      date: new Date().toDateString(),
       msg: this.state.comments,
       course: LoggedINuserArray.course
     };
@@ -79,6 +79,10 @@ class Blog extends Component {
       return <div>Add your comments...</div>;
     }
   }
+  movetoLogin() {
+    localStorage.removeItem("LoggedInUser");
+    this.props.history.push("/");
+  }
   render() {
     console.log("render called");
     var LoggedINuserArray = JSON.parse(localStorage.getItem("LoggedInUser"));
@@ -89,7 +93,12 @@ class Blog extends Component {
     return (
       <div>
         <div style={{ float: "right", paddingBottom: "5px" }}>
-          <Buttons btnName="Logout" onClick="" />
+          <Buttons
+            btnName="Logout"
+            onClick={() => {
+              this.movetoLogin();
+            }}
+          />
         </div>
         <div>
           {this.state.course == "ReactJS" ? (

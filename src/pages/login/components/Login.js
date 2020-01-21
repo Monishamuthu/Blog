@@ -308,7 +308,7 @@ class Login extends Component {
             <div style={{width : '100%',paddingTop:'20px',top:'50%',left:'50%', transform: 'translate(0%, 100%)',textAlign:'center'}}>
             {this.state.dialogMsg}
           </div>
-          <div style={{bottom:'0', position:'absolute',width : '100%',textAlign:'center'}}>
+          <div style={{bottom:'0', position:'absolute',width : '100%',textAlign:'center',paddingBottom:'10px'}}>
           <Buttons onClick={this.closeDialog} btnName="OK" >
           
             </Buttons>
