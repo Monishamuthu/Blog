@@ -43,6 +43,7 @@ class Textbox extends Component {
           className={this.props.className}
           type="text"
           value={this.props.value}
+          onBlur={this.props.onBlur}
           onChange={this.props.onChange}
           helperText={this.props.errorText === "" ? "" : this.props.errorText}
           error={this.props.error}
