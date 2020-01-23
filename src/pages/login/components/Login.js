@@ -196,7 +196,6 @@ class Login extends Component {
             usnm_errorstatus: true
           });
         } else {
-          alert(reg3.test(this.state.usnm));
           if (!reg3.test(this.state.usnm) == false) {
             this.setState({
               usnm_error_text: "special characters are not allowed",

@@ -83,7 +83,7 @@ class Register extends Component {
       console.log(localStorage.getItem("ReactUser"));
       console.log(localStorage.getItem("AngularUser"));
       console.log(localStorage.getItem("JavaUser"));
-      this.props.history.push("/");
+      // this.props.history.push("/");
     } else {
       this.openDialog("Please fill all fields", "1");
     }
@@ -103,7 +103,6 @@ class Register extends Component {
             usnm_errorstatus: true
           });
         } else {
-          alert(reg3.test(this.state.usnm));
           if (!reg3.test(this.state.usnm) == false) {
             this.setState({
               usnm_error_text: "special characters are not allowed",

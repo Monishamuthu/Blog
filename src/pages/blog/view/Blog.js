@@ -126,7 +126,7 @@ class Blog extends Component {
               <img
                 alt="logoimg"
                 style={{ width: "100%", height: "250px", position: "relative" }}
-                src="./reactimg1.png"
+                src="./angular-js-banner.webp"
               />
               <div
                 style={{
@@ -146,7 +146,7 @@ class Blog extends Component {
               <img
                 alt="logoimg"
                 style={{ width: "100%", height: "250px", position: "relative" }}
-                src="./reactimg1.png"
+                src="./java-banner.png"
               />
               <div
                 style={{

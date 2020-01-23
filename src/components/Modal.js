@@ -40,12 +40,10 @@ class Modal extends Component {
             height: "30%",
             overflow: "auto",
             margin: "15% auto auto auto",
-            borderBottomLeftRadius: 5,
-            borderBottomRightRadius: 5,
+            borderRadius: "5px",
             alignItems: "center",
             justifyContent: "center",
-            position:'relative'
-
+            position: "relative"
           }}
         >
           {this.props.children}
