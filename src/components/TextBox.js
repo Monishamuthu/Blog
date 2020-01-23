@@ -41,7 +41,7 @@ class Textbox extends Component {
           style={{ borderColor: "red" }}
           label={this.props.label}
           className={this.props.className}
-          type="text"
+          type={this.props.type}
           value={this.props.value}
           onBlur={this.props.onBlur}
           onChange={this.props.onChange}

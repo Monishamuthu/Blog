@@ -13,6 +13,12 @@ class Register extends Component {
       emid: "",
       mbno: "",
       curs: "",
+      email_error_text: "",
+      errorstatus: false,
+      usnm_error_text: "",
+      usnm_errorstatus: false,
+      mbno_error_text: "",
+      mbno_errorstatus: false,
       showDialog: false,
       dialogMsg: "",
       errstus: "0"
@@ -82,6 +88,92 @@ class Register extends Component {
       this.openDialog("Please fill all fields", "1");
     }
   };
+
+  checkBlur = fieldType => {
+    if (fieldType == "usnm") {
+      if (this.state.usnm !== "") {
+        var reg = /^[a-z]{0,30}$/;
+        var reg1 = /^\S*$/;
+        //   var reg3 = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]$/g;
+        var reg3 = /[^a-zA-Z0-9]/;
+
+        if (reg1.test(this.state.usnm) == false) {
+          this.setState({
+            usnm_error_text: "spaces are not allowed",
+            usnm_errorstatus: true
+          });
+        } else {
+          alert(reg3.test(this.state.usnm));
+          if (!reg3.test(this.state.usnm) == false) {
+            this.setState({
+              usnm_error_text: "special characters are not allowed",
+              usnm_errorstatus: true
+            });
+          } else {
+            if (reg.test(this.state.usnm) == false) {
+              this.setState({
+                usnm_error_text: "only 30 characters are allowed",
+                usnm_errorstatus: true
+              });
+            } else {
+              this.setState({
+                usnm_error_text: "",
+                usnm_errorstatus: false
+              });
+            }
+          }
+        }
+      } else {
+        this.setState({
+          usnm_error_text: "Please enter user name",
+          usnm_errorstatus: true
+        });
+      }
+    } else if (fieldType == "emid") {
+      if (this.state.emid !== "") {
+        var reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        if (reg.test(this.state.emid) == false) {
+          this.setState({
+            email_error_text: "Invalid email",
+            errorstatus: true
+          });
+        } else {
+          this.setState({
+            email_error_text: "",
+            errorstatus: false
+          });
+        }
+      } else {
+        this.setState({
+          email_error_text: "Enter a valid email",
+          errorstatus: true
+        });
+      }
+    } else if (fieldType == "mbno") {
+      if (this.state.mbno !== "") {
+        var stripped = this.state.mbno.replace(/[\s()+-]|ext\.?/gi, "");
+        var mbno_reg = /^[1-9]{1}[0-9]{9}$/;
+
+        if (mbno_reg.test(stripped) == false) {
+          this.setState({
+            mbno_error_text: "Invalid mobile number",
+            mbno_errorstatus: true
+          });
+        } else {
+          this.setState({
+            mbno_error_text: "",
+            mbno_errorstatus: false
+          });
+        }
+      } else {
+        this.setState({
+          mbno_error_text: "Enter a valid mobile number",
+          mbno_errorstatus: true
+        });
+      }
+    }
+  };
   movetoLogin() {
     this.props.history.push("/");
   }
@@ -111,6 +203,12 @@ class Register extends Component {
             label="Username"
             className=""
             value={this.state.usnm}
+            type="text"
+            errorText={this.state.usnm_error_text}
+            error={this.state.usnm_error_text.length === 0 ? false : true}
+            onBlur={() => {
+              this.checkBlur("usnm");
+            }}
             onChange={e => {
               this.setValues(e, "usnm");
             }}
@@ -119,6 +217,12 @@ class Register extends Component {
             label="Email ID"
             className=""
             value={this.state.pswd}
+            type="text"
+            errorText={this.state.email_error_text}
+            error={this.state.email_error_text.length === 0 ? false : true}
+            onBlur={() => {
+              this.checkBlur("emid");
+            }}
             onChange={e => {
               this.setValues(e, "emid");
             }}
@@ -127,6 +231,12 @@ class Register extends Component {
             label="Mobile No."
             className=""
             value={this.state.mbno}
+            type="number"
+            errorText={this.state.mbno_error_text}
+            error={this.state.mbno_error_text.length === 0 ? false : true}
+            onBlur={() => {
+              this.checkBlur("mbno");
+            }}
             onChange={e => {
               this.setValues(e, "mbno");
             }}
@@ -181,7 +291,7 @@ class Register extends Component {
               position: "absolute",
               width: "100%",
               textAlign: "center",
-              paddingBottom:'10px'
+              paddingBottom: "10px"
             }}
           >
             <Buttons onClick={this.closeDialog} btnName="OK" />

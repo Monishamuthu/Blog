@@ -11,17 +11,21 @@ var menuitems = ["Java", "AngularJS", "ReactJS"];
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state= {usnm:"",
-                    emid:"",
-                    mbno:"", 
-                    curs:"",
-                    email_error_text:"",
-                    errorstatus:false,
-                    usnm_error_text:"",
-                    usnm_errorstatus:false,
-                    showDialog: false,
-                     dialogMsg:"", 
-                     errstus: "0"}
+    this.state = {
+      usnm: "",
+      emid: "",
+      mbno: "",
+      curs: "",
+      email_error_text: "",
+      errorstatus: false,
+      usnm_error_text: "",
+      usnm_errorstatus: false,
+      mbno_error_text: "",
+      mbno_errorstatus: false,
+      showDialog: false,
+      dialogMsg: "",
+      errstus: "0"
+    };
     console.log({ props });
   }
   setValues(e, fieldType) {
@@ -48,26 +52,30 @@ class Login extends Component {
     this.props.history.push("/register");
   };
 
-  CheckUser(){
-    if(((this.state.usnm != "") || (this.state.emid != "")) && (this.state.curs != "")){
-        if(this.checkReactUser()){
-            this.openDialog("Welcome React user! ","1");
-            this.props.history.push('/blog');
-        }
-        else if(this.checkAngularUser()){
-            this.openDialog("Welcome Angular user! ","1");
-            this.props.history.push('/blog');
-        }else if(this.checkJavaUser()){
-            this.openDialog("Welcome Java user! ","1");
-            this.props.history.push('/blog');
-        }
-        else{
-            this.openDialog("Please register before login","1");
-        }
-    }else{
-        this.openDialog("Please enter registered username or email and course","1");
+  CheckUser() {
+    if (
+      (this.state.usnm != "" || this.state.emid != "") &&
+      this.state.curs != ""
+    ) {
+      if (this.checkReactUser()) {
+        this.openDialog("Welcome React user! ", "1");
+        this.props.history.push("/blog");
+      } else if (this.checkAngularUser()) {
+        this.openDialog("Welcome Angular user! ", "1");
+        this.props.history.push("/blog");
+      } else if (this.checkJavaUser()) {
+        this.openDialog("Welcome Java user! ", "1");
+        this.props.history.push("/blog");
+      } else {
+        this.openDialog("Please register before login", "1");
+      }
+    } else {
+      this.openDialog(
+        "Please enter registered username or email and course",
+        "1"
+      );
     }
-}
+  }
   checkReactUser() {
     var userData1 =
       localStorage.getItem("ReactUser") != null
@@ -173,83 +181,106 @@ class Login extends Component {
       return check;
     }
   }
-  
-  checkBlur = (fieldType) => {
-    if(fieldType == "usnm"){
-        
-        if(this.state.usnm !== ""){
-            var reg = /^[a-z]{0,30}$/;
-            var reg1 = /^\S*$/;
-         //   var reg3 = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]$/g;
-         var reg3 = /[^a-zA-Z0-9]/;
-            
-            if (reg1.test(this.state.usnm) == false) 
-            {
-                this.setState({
-                    usnm_error_text: "spaces are not allowed",usnm_errorstatus: true
-                })
-            }else{
-                alert(reg3.test(this.state.usnm));
-                if (!(reg3.test(this.state.usnm)) == false) 
-                        {
-                            this.setState({
-                                usnm_error_text: "special characters are not allowed",usnm_errorstatus: true
-                            })
-                        }else{
-                            if (reg.test(this.state.usnm) == false) 
-                            {
-                                this.setState({
-                                    usnm_error_text: "only 30 characters are allowed",usnm_errorstatus: true
-                                })
-                            }else{
-                                this.setState({
-                                    usnm_error_text: "",usnm_errorstatus: false
-                                })
-                            }
-                        }
-               
-            }
-        }else{
+
+  checkBlur = fieldType => {
+    if (fieldType == "usnm") {
+      if (this.state.usnm !== "") {
+        var reg = /^[a-z]{0,30}$/;
+        var reg1 = /^\S*$/;
+        //   var reg3 = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]$/g;
+        var reg3 = /[^a-zA-Z0-9]/;
+
+        if (reg1.test(this.state.usnm) == false) {
+          this.setState({
+            usnm_error_text: "spaces are not allowed",
+            usnm_errorstatus: true
+          });
+        } else {
+          alert(reg3.test(this.state.usnm));
+          if (!reg3.test(this.state.usnm) == false) {
             this.setState({
-                usnm_error_text: "Please enter user name",usnm_errorstatus: true
-            })
-        } 
-    }else if(fieldType == "emid"){
-        if(this.state.emid !== ""){
-            var reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-           
-            if (reg.test(this.state.emid) == false) 
-            {
-                this.setState({
-                    email_error_text: "Invalid email",errorstatus: true
-                })
-            }else{
-                this.setState({
-                    email_error_text: "",errorstatus: false
-                })
+              usnm_error_text: "special characters are not allowed",
+              usnm_errorstatus: true
+            });
+          } else {
+            if (reg.test(this.state.usnm) == false) {
+              this.setState({
+                usnm_error_text: "only 30 characters are allowed",
+                usnm_errorstatus: true
+              });
+            } else {
+              this.setState({
+                usnm_error_text: "",
+                usnm_errorstatus: false
+              });
             }
-        }else{
-            this.setState({
-                email_error_text: "Enter a valid email",errorstatus: true
-            })
-        } 
-    }else if(fieldType == "mbno"){
-        
+          }
+        }
+      } else {
+        this.setState({
+          usnm_error_text: "Please enter user name",
+          usnm_errorstatus: true
+        });
+      }
+    } else if (fieldType == "emid") {
+      if (this.state.emid !== "") {
+        var reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        if (reg.test(this.state.emid) == false) {
+          this.setState({
+            email_error_text: "Invalid email",
+            errorstatus: true
+          });
+        } else {
+          this.setState({
+            email_error_text: "",
+            errorstatus: false
+          });
+        }
+      } else {
+        this.setState({
+          email_error_text: "Enter a valid email",
+          errorstatus: true
+        });
+      }
+    } else if (fieldType == "mbno") {
+      if (this.state.mbno !== "") {
+        var stripped = this.state.mbno.replace(/[\s()+-]|ext\.?/gi, "");
+        var mbno_reg = /^[1-9]{1}[0-9]{9}$/;
+
+        if (mbno_reg.test(stripped) == false) {
+          this.setState({
+            mbno_error_text: "Invalid mobile number",
+            mbno_errorstatus: true
+          });
+        } else {
+          this.setState({
+            mbno_error_text: "",
+            mbno_errorstatus: false
+          });
+        }
+      } else {
+        this.setState({
+          mbno_error_text: "Enter a valid mobile number",
+          mbno_errorstatus: true
+        });
+      }
     }
-}
+  };
   openDialog = (msg, errstus) => {
     this.setState({
-      showDialog: true , dialogMsg: msg, errstus: errstus
+      showDialog: true,
+      dialogMsg: msg,
+      errstus: errstus
     });
   };
   closeDialog = () => {
     this.setState({
-        showDialog: false
+      showDialog: false
     });
-    if(this.state.errstus == "0"){
-        this.props.history.push('/');
+    if (this.state.errstus == "0") {
+      this.props.history.push("/");
     }
-   
   };
   render() {
     return (
@@ -273,10 +304,57 @@ class Login extends Component {
             />
           </div>
 
-          <Textbox label="Username" className="" value={this.state.usnm}  type="text"  errorText={this.state.usnm_error_text} error ={this.state.usnm_error_text.length === 0 ? false : true } onBlur={() =>{this.checkBlur("usnm")}}onChange={(e) => {this.setValues(e,"usnm")}} />
-                    <Textbox label="Email ID" className="" value={this.state.emid}  type="text" errorText={this.state.email_error_text} error ={this.state.email_error_text.length === 0 ? false : true } onBlur={() => {this.checkBlur("emid")}} onChange={(e) => {this.setValues(e,"emid")}} />
-                    <Textbox label="Mobile No." className="" value={this.state.mbno} type="number" onChange={(e) => {this.setValues(e,"mbno")}} />
-                    <Selectbox labelId="courseCombo" labelName = "Select Course" value={this.state.curs}   onChange={(e) => {this.setValues(e,"curs")}} menuitems = {menuitems}/>
+          <Textbox
+            label="Username"
+            className=""
+            value={this.state.usnm}
+            type="text"
+            errorText={this.state.usnm_error_text}
+            error={this.state.usnm_error_text.length === 0 ? false : true}
+            onBlur={() => {
+              this.checkBlur("usnm");
+            }}
+            onChange={e => {
+              this.setValues(e, "usnm");
+            }}
+          />
+          <Textbox
+            label="Email ID"
+            className=""
+            value={this.state.emid}
+            type="text"
+            errorText={this.state.email_error_text}
+            error={this.state.email_error_text.length === 0 ? false : true}
+            onBlur={() => {
+              this.checkBlur("emid");
+            }}
+            onChange={e => {
+              this.setValues(e, "emid");
+            }}
+          />
+          <Textbox
+            label="Mobile No."
+            className=""
+            value={this.state.mbno}
+            type="number"
+            errorText={this.state.mbno_error_text}
+            error={this.state.mbno_error_text.length === 0 ? false : true}
+            onBlur={() => {
+              this.checkBlur("mbno");
+            }}
+            onChange={e => {
+              this.setValues(e, "mbno");
+            }}
+          />
+          <Selectbox
+            labelId="courseCombo"
+            labelName="Select Course"
+            value={this.state.curs}
+            onChange={e => {
+              this.setValues(e, "curs");
+            }}
+            menuitems={menuitems}
+          />
           {/*  <Selectbox labelId="courseCombo" labelName = "Select Course" value={this.state.curs}   onChange={(e) => {this.setValues(e,"curs")}} menuitems = {menuitems}/> */}
           <div
             style={{
@@ -305,15 +383,29 @@ class Login extends Component {
         {/* </div>  */}
 
         <Modal open={this.state.showDialog}>
-            <div style={{width : '100%',paddingTop:'20px',top:'50%',left:'50%', transform: 'translate(0%, 100%)',textAlign:'center'}}>
+          <div
+            style={{
+              width: "100%",
+              paddingTop: "20px",
+              top: "50%",
+              left: "50%",
+              transform: "translate(0%, 100%)",
+              textAlign: "center"
+            }}
+          >
             {this.state.dialogMsg}
           </div>
-          <div style={{bottom:'0', position:'absolute',width : '100%',textAlign:'center',paddingBottom:'10px'}}>
-          <Buttons onClick={this.closeDialog} btnName="OK" >
-          
-            </Buttons>
+          <div
+            style={{
+              bottom: "0",
+              position: "absolute",
+              width: "100%",
+              textAlign: "center",
+              paddingBottom: "10px"
+            }}
+          >
+            <Buttons onClick={this.closeDialog} btnName="OK" />
           </div>
-     
         </Modal>
       </div>
     );
