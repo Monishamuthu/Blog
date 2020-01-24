@@ -16,6 +16,14 @@ class Blog extends Component {
     };
   }
 
+  componentWillMount(){
+    var LoggedINuserArray = JSON.parse(localStorage.getItem("LoggedInUser"));
+   
+    if (this.state.course === "") {
+      this.setState({ course: LoggedINuserArray.course });
+    }
+  }
+
   addComments() {
     //var reactComm = localStorage.getItem("reactCommArry") != null ? JSON.parse(localStorage.getItem("reactCommArry")) : "[]"
     var reactComm = JSON.parse(localStorage.getItem("reactCommArry") || "[]");
@@ -85,10 +93,7 @@ class Blog extends Component {
   }
   render() {
     console.log("render called");
-    var LoggedINuserArray = JSON.parse(localStorage.getItem("LoggedInUser"));
-    if (this.state.course == "") {
-      this.setState({ course: LoggedINuserArray.course });
-    }
+    
 
     return (
       <div>
