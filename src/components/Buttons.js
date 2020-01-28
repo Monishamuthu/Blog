@@ -10,7 +10,8 @@ class Buttons extends Component{
        // let {onClick = () => {}} = this.props;
         return(
             <div>
-                <Button variant="contained" onClick={this.props.onClick}  style={{ 
+                <Button variant="contained"
+                 onClick={this.props.onClick}  style={{ 
                    // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
                     background: 'linear-gradient(45deg, #fc4a1a 30%, #f7b733 90%)',
                     border: 0,
